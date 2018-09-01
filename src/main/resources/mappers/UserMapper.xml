@@ -75,6 +75,11 @@
         where username=#{username}
     </select>
 
+    <select id="checkEmail" resultType="int" parameterType="string">
+        select count(1) from mapmap
+        where eamil=#{email}
+    </select>
+
     <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
