@@ -1,73 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mapmap.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.mapmap.pojo.User" >
-    <constructor >
-      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mapmap.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.mapmap.pojo.User">
+        <constructor>
+            <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     user_id, user_name, user_phone
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from map_user
-    where user_id = #{userId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from map_user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from map_user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mapmap.pojo.User" >
+    <insert id="insert" parameterType="com.mapmap.pojo.User">
     insert into map_user (user_id, user_name, user_phone
       )
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mapmap.pojo.User" >
-    insert into map_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="userPhone != null" >
-        user_phone,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null" >
-        #{userPhone,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mapmap.pojo.User" >
-    update map_user
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPhone != null" >
-        user_phone = #{userPhone,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where user_id = #{userId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mapmap.pojo.User" >
+    <insert id="insertSelective" parameterType="com.mapmap.pojo.User">
+        insert into map_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userPhone != null">
+                user_phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mapmap.pojo.User">
+        update map_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mapmap.pojo.User">
     update map_user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_phone = #{userPhone,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+    <select id="checkUsername" resultType="int" parameterType="string">
+        select count(1) from mapmap
+        where username=#{username}
+    </select>
+
+    <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from mapmap
+        where username=#{username}
+        and phone=#{phone}
+    </select>
 </mapper>
